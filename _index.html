@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+    #phaser-app {
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+		
+	canvas {
+		width: 100%;
+		height: 100%;
+	}
+    </style>
+<script src="//cdn.jsdelivr.net/npm/phaser@3.20.1/dist/phaser.min.js"></script>
+</head>
+<script>
+class StoryScene extends Phaser.Scene {
+     
+     constructor() {
+         super({key: 'storyScene'});
+     }
+     
+     preload(){
+        this.load.image('sky_castle', 'assets/sky_castle_1.png');
+
+        resizeApp();
+     };
+     create() {
+        this.add.sprite(250, 350, 'sky_castle');
+
+        var text = this.add.text(20,50, 'Приветствую тебя, отважный Дракон!',  {fontSize: '16px', fill: '#000'});
+        var text = this.add.text(20,70, 'Добро пожаловать в Летающий Замок, что находится',  {fontSize: '16px', fill: '#000'});
+        var text = this.add.text(20,90, 'среди белых облаков.',  {fontSize: '16px', fill: '#000'});
+        var text = this.add.text(20,130, 'Нынче у нас неспокойные времена... ',  {fontSize: '16px', fill: '#000'});
+        var text = this.add.text(20,150, 'Капризная Принцесса совсем измучала рыцарей',  {fontSize: '16px', fill: '#000'});
+        var text = this.add.text(20,170, 'своим нравом и аппетитом...',  {fontSize: '16px', fill: '#000'});
+        var text = this.add.text(20,210, '"Аппетитом?!" - спросишь ты.',  {fontSize: '16px', fill: '#000'});
+        var text = this.add.text(20,230, 'Сумеешь выполнить все капризы Принцессы -',  {fontSize: '16px', fill: '#000'});
+        var text = this.add.text(20,250, 'сохраним тебе жизнь. ',  {fontSize: '16px', fill: '#000'});
+        var text = this.add.text(20,290, 'Дерзай, друг! Хорошего полёта!',  {fontSize: '16px', fill: '#000'});
+        var text = this.add.text(20,310, 'И остерегайся грозовых туч.',  {fontSize: '16px', fill: '#000'});
+
+        var infplay = this.add.text(200,350, 'Play',  {fontSize: '32px', fill: '#000', stroke: '#fff', strokeThickness : 5});
+        infplay.setInteractive({ useHandCursor: true });
+        infplay.on('pointerdown', () => this.clickButton_Game() ); 
+
+    };
+    clickButton_Game() {
+        this.scene.start('princessScene');
+        this.scene.switch('princessScene');
+    }    
+
+ }
+class PrincessScene extends Phaser.Scene {
+     
+     constructor() {
+         super({key: 'princessScene'});
+     }
+     
+     preload(){
+        this.load.image('sky_castle', 'assets/sky_castle_1.png');
+        this.load.image('princess_good', 'assets/princess_good.png');
+
+        resizeApp();
+     };
+     create() {
+        this.add.sprite(250, 350, 'sky_castle');
+        this.add.sprite(100, 100, 'princess_good');
+         
+        var princessLines = [
+            ['Отправляйся в путь и принеси мне', 'земляничных пончиков в розовой глазури!', 'Смотри, не перепутай! Буду ждать тебя здесь.'],
+            ['Хочу 37 пончиков и ни одним меньше!', 'Вперёд-вперёд!'],
+            ['Наберёшь ради меня 200 очков -', 'и я подарю тебе свою улыбку!'],
+            ['Хочешь жить? Принеси мне пончиков!', 'Быстро!'],
+            ['У меня сегодня тропическое настроение -', 'принеси мне пончиков с ананасами!'],
+            ['Ах, я несчастная Принцесса!', 'Мне всего-то и нужно, что пару вкуснейших пончиков', 'в голубой глазури!', 'Неужели ты не хочешь помочь своей верной подруге?'],
+            ['Душа просит пончиков с карамелью...', 'Что я могу сделать с велением своей', 'королевской души?', 'Вперёд, дракон, не медли! Выполняй!!!'],
+            ['Я приказываю тебе принести мне', '17 пончиков немедленно!'],
+            ['Слабо разрушить 14 облаков?', 'Ради своей Принцессы...'],
+            ['Набери 100 очков и я сохраню тебе жизнь!'],
+            ['О, Дракончик!', 'Принесёшь своей Принцессе', 'десяточек земляничных пончиков?'],
+            ['Или я съем 15 пончиков прямо', 'сейчас, или умру!', 'Спаси меня, о, Дракон!'],
+            ['Я чувствую, как слабею...', 'И лишь земляничные пончики могут спасти меня...', 'Штук 5, не меньше!']
+        ];
+        
+        var randomI = Math.random(0, princessLines.length-1)*(princessLines.length-1);
+        var plIndex = Math.floor( randomI);
+        var lineY = 200; 
+        var text = '';
+        for (const el of princessLines[plIndex]) {
+            var text = this.add.text(15, lineY, el, {fontSize: '16px', fill: '#000'});
+            lineY += 20;
+        }
+
+        var infplay = this.add.text(200,350, 'Play',  {fontSize: '32px', fill: '#000', stroke: '#fff', strokeThickness : 5});
+        infplay.setInteractive({ useHandCursor: true });
+        infplay.on('pointerdown', () => this.clickButton_Game() ); 
+
+    };
+    clickButton_Game() {
+        this.scene.stop('princessScene');
+        this.scene.switch('gameScene');
+    }    
+
+ }
+class GoodEndingScene extends Phaser.Scene {
+     
+     constructor() {
+         super({key: 'goodEnding'});
+     }
+     
+     preload(){
+        this.load.image('sky_castle', 'assets/sky_castle_1.png');
+        this.load.image('princess_good', 'assets/princess_good.png');
+
+        resizeApp();
+     };
+     create() {
+        this.add.sprite(250, 350, 'sky_castle');
+        this.add.sprite(100, 100, 'princess_good');
+         
+        var text = this.add.text(15, 200, 'Наконец-то Принцесса довольна и не капризничает!', {fontSize: '16px', fill: '#000'});
+        var text = this.add.text(15, 220, 'Ты молодец!', {fontSize: '16px', fill: '#000'}); 
+
+
+        var infplay = this.add.text(150,350, 'Main Menu',  {fontSize: '32px', fill: '#000', stroke: '#fff', strokeThickness : 5});
+        infplay.setInteractive({ useHandCursor: true });
+        infplay.on('pointerdown', () => this.clickButton_Game() ); 
+
+    };
+    clickButton_Game() {
+        this.scene.switch('titleScene');
+    }    
+
+ }
+class TitleScene extends Phaser.Scene {
+     
+     constructor() {
+         super({key: 'titleScene'});
+     }
+     
+     preload(){
+        this.load.image('sky_castle', 'assets/sky_castle_1.png');
+        this.load.audio('theme', ['assets/autism_island.ogg']);
+        this.musicPlaying = false;
+        resizeApp();
+     };
+     create() {
+      
+        this.add.sprite(250, 350, 'sky_castle');
+       
+        var text = this.add.text(50,70, 'D&D: Dragon and Donuts',  {fontSize: '32px', fill: '#000'});
+        
+        var infplay = this.add.text(200,170, 'Play',  {fontSize: '32px', fill: '#000'});
+        infplay.setInteractive({ useHandCursor: true });
+        infplay.on('pointerdown', () => this.clickButton_Game() ); 
+        
+        var storymode = this.add.text(150,220, 'Story Mode',  {fontSize: '32px', fill: '#000'});
+        storymode.setInteractive({ useHandCursor: true });
+        storymode.on('pointerdown', () => this.clickButton_Story() );
+    };
+    clickButton_Game() {
+        var music = this.sound.add('theme', {volume: 0.35, loop: true});
+        if (this.musicPlaying == false) {
+            this.musicPlaying = true;
+            music.play(); 
+        }
+        
+        this.scene.switch('gameScene');
+    }    
+    clickButton_Story() {
+        var music = this.sound.add('theme', {volume: 0.35, loop: true});
+        if (this.musicPlaying == false) {
+            this.musicPlaying = true;
+            music.play(); 
+        } 
+        game.scene.start('storyScene');  
+        this.scene.switch('storyScene');
+    }    
+ }
+class RestartScene extends Phaser.Scene {
+     constructor() {
+         
+         super({key: 'restartScene'});
+     }
+
+     preload(){
+        this.load.image('sky_castle_2', 'assets/sky_castle_2.png');
+        this.load.image('princess_evil', 'assets/princess_evil.png');
+        this.load.audio('theme', ['assets/autism_island.ogg']);
+     };
+     create() {
+        this.add.sprite(250, 350, 'sky_castle_2');
+        this.add.sprite(100, 100, 'princess_evil');
+         
+         
+         var princessLines = [
+            ['Земляничные?! Я просила банановые!!!', 'Ты что, меня не слушаешь?! Лети обратно!'],
+            ['В смысле, я просила в голубой глазури?', 'ТЫ МЕНЯ НЕ СЛУШАЛ! Хочу в розовой!!!'],
+            ['Мне кажется, ты стал невнимательно', 'ко мне относиться...','Я хотела банановых пончиков!'],
+            ['Неужели ты думаешь, что я приму от тебя', 'менее 100 пончиков?', 'Мелко плаваешь, я же Принцесса!'],
+            ['У меня вообще аллергия на ананас!!!', 'Ты хочешь убить свою Принцессу? Стража!'],
+            ['Вы только посмотрите,','он совсем решил меня извести...', 'Я просила пончики в зелёной глазури!'],
+            ['Кто-нибудь, накапайте Принцессе успокоительное...', 'Дракон опять всё перепутал!'],
+            ['Моему королевскому терпению скоро придёт конец!', 'Лети обратно и исправляй свою ошибку!'],
+            ['Фу, уберите это! Терпеть не могу землянику!'],
+            ['А я хотела на один пончик больше!','Слетаешь снова ради меня?'],
+            ['В пончиках с карамелью слишком', 'много калорий!', 'Я слежу за питанием! Принеси мне с мёдом!'],
+            ['Ой, я уже и не хочу медовых пончиков...','Может, слетаешь за карамельными? Они вкуснее!'],
+            ['Земляника, банана, ананас, карамель...', 'Всё наскучило.', 'Принеси своей Принцессе что-нибудь новенькое!'],
+            ['Как клубничные закончились?','Не хочу ничего слышать!!!','Принеси мне их немедленно!'], 
+            ['А есть в зелёной глазури, но со вкусом черники?','Вот таких хочу, слово Принцессы!']
+         ];
+        
+        var randomI = Math.random(0, princessLines.length-1)*(princessLines.length-1);
+        var plIndex = Math.floor( randomI);
+        var lineY = 200; 
+        for (const el of princessLines[plIndex]) {
+            var text = this.add.text(15, lineY, el, {fontSize: '16px', fill: '#000', stroke: '#fff', strokeThickness : 5});
+            lineY += 20;
+        } 
+        
+
+        var text = this.add.text(150,450, 'Restart',  {fontSize: '32px', fill: '#000', stroke: '#fff', strokeThickness : 5});
+        text.setInteractive({ useHandCursor: true });
+        text.on('pointerdown', () => this.clickButton1() );
+        var menu = this.add.text(150,500, 'Menu',  {fontSize: '32px', fill: '#000', stroke: '#fff', strokeThickness : 5});
+        menu.setInteractive({ useHandCursor: true });
+        menu.on('pointerdown', () => this.clickButton2() );
+    };
+
+    clickButton1() {
+       this.scene.stop('restartScene'); 
+       this.scene.start('gameScene');
+       this.scene.switch('gameScene');
+    }
+    clickButton2() {
+        this.scene.stop('restartScene'); 
+        this.scene.stop('gameScene');
+        this.scene.switch('titleScene');
+    }
+}
+
+    
+ class GameScene extends Phaser.Scene {
+
+    constructor() {
+        super({key : 'gameScene'});
+    }
+
+    init() {
+        
+    };
+
+    preload() {
+        this.load.image('sky', 'assets/sky.png');
+        this.load.spritesheet('dragon', 'assets/Dragon.png',{ frameWidth: 128, frameHeight: 128 });
+        this.load.image('donut', 'assets/DONAT.png');
+        this.load.image('cloud1','assets/Cloudeyes1.png')
+        this.load.image('cloud2','assets/Cloudeyes2.png')
+        this.load.image('donutGold', 'assets/DONAT_gold_2.png');
+        
+        this.load.audio('theme', ['assets/autism_island.ogg']);
+        this.load.audio('death', 'assets/death.wav');
+        this.load.audio('golden', 'assets/golden_donut.wav');
+        this.load.audio('donut', 'assets/donut.wav');
+        this.load.audio('jump', 'assets/jump.wav');
+        this.load.audio('jump2', 'assets/jump.wav');
+        this.load.audio('menu', 'assets/menu_click.wav');
+        this.load.audio('evilSound', 'assets/EvilSound.wav');
+        this.load.image('donutEvil', 'assets/DONAT_evil.png');
+        
+        this.clouds;
+        this.score = 0;
+        this.scoreText;
+        this.line1;
+        this.gameOver=false;
+        this.donut;
+        this.goldDonut;
+        this.evilDonut;
+        this.jump_flag=false;
+
+    };
+    create() {
+        this.input.addPointer();
+        this.touchUp = false;
+        this.sky=this.add.image(250, 350, 'sky');
+        this.player = this.physics.add.sprite(250, 250, 'dragon').setInteractive();
+        this.player.setBounce(0.2);
+        this.player.setCollideWorldBounds(true);
+        this.player.body.setSize(40,110,true);
+        this.clouds = this.physics.add.group();
+        this.physics.add.collider(this.player, this.clouds, this.hitEnemy, null, this);
+        this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+        this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.onEvent, callbackScope: this, loop: true });
+        this.donut = this.physics.add.group();
+        this.goldDonut = this.physics.add.group();
+        this.evilDonut = this.physics.add.group();
+        this.physics.add.overlap(this.player, this.donut, this.collectDonut, null, this);
+        this.physics.add.overlap(this.player, this.evilDonut, this.collectEvilDonut, null, this);
+        this.physics.add.overlap(this.player, this.goldDonut, this.collectGoldDonut, null, this);
+        this.physics.add.collider(this.player, this, this.hitEnemy, null, this);
+
+        this.anims.create({
+        key: 'left',
+        frames: this.anims.generateFrameNumbers('dragon', { start: 0, end: 0 }),
+        frameRate: 0,
+        repeat: -1
+    });
+
+this.anims.create({
+        key: 'turn',
+        frames: [ { key: 'dragon', frame: 1 } ],
+        frameRate: 1
+    });
+
+    this.anims.create({
+        key: 'right',
+        frames: this.anims.generateFrameNumbers('dragon', { start: 2, end: 2 }),
+        frameRate: 0,
+        repeat: -1
+    });
+
+
+    };
+
+    update() {
+        var jump_sound1=this.sound.add('jump', {volume: 0.35});
+       // var jump_sound2=this.sound.add('jump2', {volume: 0.35});
+        
+        if (this.score >= 1500) {
+            this.physics.pause();
+            this.timedEvent.destroy();
+            this.scene.stop('gameScene');
+            this.scene.restart('goodEnding');
+            this.scene.switch('goodEnding');
+        }
+      
+         if (this.gameOver)
+            {
+                this.scene.stop('gameScene');
+                this.gameOver = false;
+                this.scene.stop('restartScene');
+                this.scene.switch('restartScene');
+            }
+                this.cursors = this.input.keyboard.createCursorKeys();
+                if ( !this.cursors.up.isDown) {
+                this.jump_flag = false;
+            }
+                if (this.cursors.left.isDown)
+            {
+                this.player.setVelocityX(-300);
+
+                this.player.anims.play('left', true);
+            }
+            else if (this.cursors.right.isDown)
+            {
+                this.player.setVelocityX(300);
+
+                this.player.anims.play('right', true);
+            }
+            else if (this.cursors.up.isDown){
+                
+                if (this.jump_flag == false) {
+                    jump_sound1.play(); 
+                    this.jump_flag = true}
+                this.player.setVelocityY(-250);
+
+            }
+            else
+            {
+                this.player.setVelocityX(0);
+
+                this.player.anims.play('turn');
+            }
+
+            
+            //touch
+              if (this.input.pointer1.isDown){
+                if (this.input.pointer1.x<=250){
+
+                    this.player.setVelocityX(-300);
+
+                    this.player.anims.play('left', true);
+                }
+                if (this.input.pointer1.x>250){
+
+                    this.player.setVelocityX(300);
+
+                    this.player.anims.play('right', true);
+                }
+                this.touchUp = true;
+            }
+            /*else {
+                if (this.touchUp == true) {
+                    this.player.setVelocityY(-330);
+                    this.touchUp = false;
+                }
+            }*/
+            this.input.on('gameobjectdown', function (pointer,gameObject) {
+                
+                gameObject.setVelocityY(-330);
+                
+               // jump_sound2.play();
+
+            });
+    };
+            
+    end() {
+        
+    }
+     
+    rndgenerate(){
+        return Math.random();
+    }
+    createGoldDonut(){
+        var x = this.rndgenerate()*500;
+        var gold = this.goldDonut.create(x, 0, 'donutGold');
+        gold.body.setSize(55,55,true);
+        gold.setCollideWorldBounds(false);
+
+    }
+    createEvilDonut(){
+        var x = this.rndgenerate()*500;
+        var evil = this.evilDonut.create(x, 0, 'donutEvil');
+        evil.body.setSize(55,55,true);
+        evil.setCollideWorldBounds(false);
+    }
+    createDonut(){
+        var x = this.rndgenerate()*500;
+        var don = this.donut.create(x, 0, 'donut');
+        don.body.setSize(55,55,true);
+        don.setCollideWorldBounds(false);
+
+    }
+    createground(){
+        this.mass=['cloud1','cloud2'];
+        var index = this.rndgenerate()*100;
+        if (index>50){
+            index=1;
+        }
+        else{
+            index=0;
+        }
+        var x = this.rndgenerate()*500;
+        var enemy = this.clouds.create(x, 0, this.mass[index]);
+        //enemy.body.setSize(123,101,0,0);
+        enemy.setCollideWorldBounds(false);
+        //enemy.setVelocity(Phaser.Math.Between(0,0), 40);
+        if (index == 1){
+            enemy.setVelocity(Phaser.Math.Between(0,0), 360);
+            enemy.body.setSize(100,110,true);
+        }
+        else{
+            enemy.setVelocity(Phaser.Math.Between(0,0), 120);
+            enemy.body.setSize(110,40,true);
+            
+        }
+    }
+    onEvent(){
+        var chance = Math.random()*100;
+        if (chance>99){
+            this.createGoldDonut();
+        }else if(chance>80){
+            this.createDonut();
+        }
+        else if(chance<5){
+            this.createEvilDonut();
+        }
+        else{
+            this.createground();
+        }
+        this.score += 1;
+        this.scoreText.setText('Score: ' + this.score);
+
+    }
+    collectDonut(player,don){
+        don.disableBody(true, true);
+        var music_donut=this.sound.add('donut', {volume: 0.35});
+        music_donut.play();
+
+        //  Add and update the score
+        this.score += 10;
+        this.scoreText.setText('Score: ' + this.score);
+    }
+    collectGoldDonut(player,gold,){
+        gold.disableBody(true, true);
+        var gold_music=this.sound.add('golden', {volume: 0.35})
+        gold_music.play();
+        //  Add and update the score
+        this.score += 100;
+        this.scoreText.setText('Score: ' + this.score);
+    }
+    collectEvilDonut(player,evil){
+        evil.disableBody(true, true);
+        var evil_sound=this.sound.add('evilSound', {volume: 0.35});
+        evil_sound.play();
+        //  Add and update the score
+        if (this.score>=25){
+          this.score -= 25;  
+        }
+        else{this.score = 0;}
+        this.scoreText.setText('Score: ' + this.score);
+    }
+    hitEnemy (player, enemy)
+    {
+        var death_sound=this.sound.add('death', {volume: 0.35});
+        death_sound.play();
+        this.physics.pause();
+
+        this.gameOver = true;
+        this.timedEvent.destroy();
+
+    }
+
+}
+    
+
+var gameScene = new GameScene();
+var titleScene = new TitleScene();
+var storyScene = new StoryScene();
+var princessScene = new PrincessScene();  
+var goodEnding = new GoodEndingScene();
+    
+// Scene is no longer needed in config
+    
+var config = {
+    type: Phaser.AUTO,
+    width: 500,
+    height: 700,
+    parent: 'phaser-app',
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 300 },
+            debug: false
+        }
+    },
+    audio: {
+        disableWebAudio: true
+    }
+};
+    
+
+var game = new Phaser.Game(config);
+    
+game.scene.add('titleScene', titleScene);
+game.scene.add('game', gameScene);
+game.scene.add('storyScene', storyScene);
+game.scene.add('princessScene', princessScene);
+game.scene.add('goodEnding', goodEnding);
+
+game.scene.start('titleScene');
+ 
+var restartScene = new RestartScene();
+game.scene.add('restartScene', restartScene);
+
+   
+function resizeApp()
+{
+    // Width-height-ratio of game resolution
+    let game_ratio = 500 / 700;
+
+    // Make div full height of browser and keep the ratio of game resolution
+    let divG = document.getElementById('phaser-app');
+    divG.style.width = (window.innerHeight * game_ratio) + 'px';
+    divG.style.height = window.innerHeight + 'px';
+
+    // Check if device DPI messes up the width-height-ratio
+    let canvasG = document.getElementsByTagName('canvas')[0];
+
+    let dpi_w = (parseInt(divG.style.width) / canvasG.width);
+    let dpi_h = (parseInt(divG.style.height) / canvasG.height);
+
+    let height = window.innerHeight * (dpi_w / dpi_h);
+     let width = height * game_ratio;
+
+    canvasG.style.width = width + 'px';
+    canvasG.style.height = height + 'px';
+}
+
+// Add to resize event
+window.addEventListener('resize', resizeApp);
+
+</script>
+
+    <body>
+        <div id="phaser-app"></</div>
+    </body>
